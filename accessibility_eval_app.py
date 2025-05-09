@@ -1,17 +1,36 @@
+import os
 import streamlit as st
 import pandas as pd
 import re
-from pathlib import Path
+from supabase import create_client, Client
+
+# ----------------------
+# Supabase Configuration
+# ----------------------
+SUPABASE_URL = "https://dbumrbpmazqmnuknmjnu.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRidW1yYnBtYXpxbW51a25tam51Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3NjYwNzEsImV4cCI6MjA2MjM0MjA3MX0.yh5xwTCemhHh6UUpow_EjIKVfdXskjAj23USEr-3ETA"
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # ----------------------
 # Streamlit Configuration
 # ----------------------
 st.set_page_config(page_title="A11y Agent Lab", page_icon="♿️", layout="wide")
+st.markdown("# Accessibility Agent Lab")
 
 # ----------------------
-# Dummy Data for Each Website
+# Fetch site list from Supabase
 # ----------------------
-# Replace these mappings with your actual JSON-loading logic
+sites = supabase.table("sites").select("site_name").execute().data
+site_list = [row["site_name"] for row in sites]
+
+# ----------------------
+# Dropdown: select website
+# ----------------------
+selected_site = st.selectbox("Select a website for analysis", site_list)
+
+# ----------------------
+# JSON mapping lives in code
+# ----------------------
 SITE_JSON_MAP = {
     "Google": [
     {
@@ -141,120 +160,112 @@ SITE_JSON_MAP = {
 ]
 }
 
-
-IMAGE_PATH_MAP = {
-    "Google": "webp\google.webp",
-    "Microsoft": "webp\microsoft.webp",
-    "GNU": "webp\gnu.webp"
-}
+DUMMY_RESPONSE = SITE_JSON_MAP[selected_site]
 
 # ----------------------
-# UI: Website Selection
+# Load screenshot path + build public URL
 # ----------------------
-st.selected_site = st.selectbox("Select a website for analysis", list(SITE_JSON_MAP.keys()))
-DUMMY_RESPONSE = SITE_JSON_MAP[st.selected_site]
+row = (
+    supabase.table("sites")
+    .select("screenshot_path")
+    .eq("site_name", selected_site)
+    .single()
+    .execute()
+    .data
+)
+screenshot_path = row["screenshot_path"]
+img_url = supabase.storage.from_("screenshots").get_public_url(screenshot_path)
 
 # ----------------------
-# Parse FixingAgent Suggestions
+# Parse FixingAgent suggestions
 # ----------------------
-fix_item = next(item for item in DUMMY_RESPONSE if item['name'] == 'FixingAgent')
-content = fix_item['content']
-raw_sugs = re.split(r'\n\n(?=\d+\.)', content)
-sugs = raw_sugs[1:]
-
-# ----------------------
-# Initialize Feedback
-# ----------------------
-if 'feedback' not in st.session_state:
-    st.session_state.feedback = []
-
-# ----------------------
-# App Title
-# ----------------------
-st.markdown("# Accessibility Agent Lab")
+fix_item = next(item for item in DUMMY_RESPONSE if item["name"] == "FixingAgent")
+raw = fix_item["content"]
+sugs = re.split(r"\n\n(?=\d+\.)", raw)[1:]
 
 # ----------------------
 # Tabs: Review & Stats
 # ----------------------
 tab1, tab2 = st.tabs(["Review", "Stats"])
 
-# ----------------------
-# Review Tab: Display Detections & Fixes
-# ----------------------
 with tab1:
+    # -- Detection Findings --
     st.header("🔍 Detection Agent Findings")
     title_map = {
-        'semantic-agent': 'Semantic',
-        'contrast-agent': 'Contrast',
-        'axe-violations-agent': 'Axe Violations',
-        'image-captioning-agent': 'Image Captioning',
-        'VisuallyImpairedAgent': 'Visually Impaired',
-        'MotorImpairedAgent': 'Motor Impaired',
-        'ColorBlindAgent': 'Color Blind',
+        "semantic-agent": "Semantic",
+        "contrast-agent": "Contrast",
+        "axe-violations-agent": "Axe Violations",
+        "image-captioning-agent": "Image Captioning",
+        "VisuallyImpairedAgent": "Visually Impaired",
+        "MotorImpairedAgent": "Motor Impaired",
+        "ColorBlindAgent": "Color Blind",
     }
-    detections = [d for d in DUMMY_RESPONSE if d['name'] in title_map]
     for key, title in title_map.items():
         st.subheader(f"{title} Agent Findings")
-        entries = [d['content'] for d in detections if d['name'] == key]
-        if not entries:
+        for d in [d for d in DUMMY_RESPONSE if d["name"] == key]:
+            st.info(d["content"])
+        if not any(d["name"] == key for d in DUMMY_RESPONSE):
             st.success("No issues detected ✓")
-        for e in entries:
-            st.info(e)
 
     st.markdown("---")
 
-    img_path = IMAGE_PATH_MAP.get(st.selected_site)
-    if img_path and Path(img_path).exists():
-        st.image(img_path, caption=f"Screenshot: {st.selected_site}")
-    else:
-        st.warning(f"Screenshot not found for {st.selected_site} at {img_path}")
-
+    # -- Screenshot --
+    st.image(img_url, caption=f"Screenshot: {selected_site}")
     st.markdown("---")
 
-    st.header("🛠️ Fixing Agent Suggestions for " + st.selected_site)
-    for idx, suggestion in enumerate(sugs, start=1):
+    # -- Fixing Suggestions --
+    st.header(f"🛠️ Fixing Agent Suggestions for {selected_site}")
+    for idx, sug in enumerate(sugs, start=1):
         st.subheader(f"Suggestion {idx}")
-        st.markdown(suggestion, unsafe_allow_html=True)
+        st.markdown(sug, unsafe_allow_html=True)
         col_up, col_down = st.columns(2)
-        if col_up.button("👍 Upvote", key=f"up_{st.selected_site}_{idx}"):
-            st.session_state.feedback.append({'site': st.selected_site, 'fix_index': idx, 'action': 'up'})
+        if col_up.button("👍 Upvote", key=f"u_{selected_site}_{idx}"):
+            supabase.table("feedback").insert({
+                "site_name": selected_site,
+                "fix_index": idx,
+                "action": "up"
+            }).execute()
             col_up.success("Upvoted")
-        if col_down.button("👎 Downvote", key=f"down_{st.selected_site}_{idx}"):
-            st.session_state.feedback.append({'site': st.selected_site, 'fix_index': idx, 'action': 'down'})
+        if col_down.button("👎 Downvote", key=f"d_{selected_site}_{idx}"):
+            supabase.table("feedback").insert({
+                "site_name": selected_site,
+                "fix_index": idx,
+                "action": "down"
+            }).execute()
             col_down.error("Downvoted")
 
-# ----------------------
-# Stats Tab: Aggregate Feedback
-# ----------------------
 with tab2:
-    st.header(f"📊 Feedback Stats for {st.selected_site}")
-    df = pd.DataFrame(st.session_state.feedback)
+    st.header(f"📊 Feedback Stats for {selected_site}")
+    fb = (
+        supabase.table("feedback")
+        .select("site_name,fix_index,action")
+        .eq("site_name", selected_site)
+        .execute()
+        .data
+    )
+    df = pd.DataFrame(fb)
     if df.empty:
-        st.info("No feedback yet – vote on suggestions in the Review tab.")
+        st.info("No feedback yet – vote in the Review tab.")
     else:
-        # Filter by selected site
-        df_site = df[df.site == st.selected_site]
-        if df_site.empty:
-            st.info(f"No feedback yet for {st.selected_site}.")
-        else:
-            # Group by site & fix_index
-            summary = df_site.groupby(['site', 'fix_index']).action \
-                .value_counts().unstack(fill_value=0).reset_index()
-            summary['total'] = summary.get('up', 0) + summary.get('down', 0)
-            summary['agreement'] = summary.get('up', 0) / summary['total']
-            summary = summary.rename(columns={'up': 'Upvotes', 'down': 'Downvotes'})
+        summary = (
+            df.groupby(["site_name","fix_index"])
+            .action.value_counts()
+            .unstack(fill_value=0)
+            .reset_index()
+            .rename(columns={"up":"Upvotes","down":"Downvotes"})
+        )
+        summary["total"] = summary["Upvotes"] + summary["Downvotes"]
+        st.subheader("Per-Suggestion Summary")
+        st.dataframe(summary[["site_name","fix_index","Upvotes","Downvotes"]])
 
-            st.subheader("Per-Suggestion Summary")
-            st.dataframe(summary[['site', 'fix_index', 'Upvotes', 'Downvotes']])
+        total = len(df)
+        ups = df["action"].value_counts().get("up",0)
+        downs = df["action"].value_counts().get("down",0)
+        agreement = ups/total if total else 0
 
-            total_votes = int(df_site.shape[0])
-            up_votes = int(df_site['action'].value_counts().get('up', 0))
-            down_votes = int(df_site['action'].value_counts().get('down', 0))
-            agreement = up_votes / total_votes if total_votes else 0
-
-            st.subheader("Overall Metrics")
-            c1, c2, c3, c4 = st.columns(4)
-            c1.metric("Total Votes", total_votes)
-            c2.metric("👍 Upvotes", up_votes)
-            c3.metric("👎 Downvotes", down_votes)
-            c4.metric("Agreement", f"{agreement:.0%}")
+        st.subheader("Overall Metrics")
+        c1,c2,c3,c4 = st.columns(4)
+        c1.metric("Total Votes", total)
+        c2.metric("👍 Upvotes", ups)
+        c3.metric("👎 Downvotes", downs)
+        c4.metric("Agreement", f"{agreement:.0%}")
