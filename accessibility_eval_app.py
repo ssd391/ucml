@@ -69,7 +69,7 @@ SITE_JSON_MAP = {
         "role": "user"
     },
     {
-        "content": "1. Semantic Violations (SemanticAgent):\n   - Issue: Incorrect heading order.\n   - Fix: Ensure heading levels only increase by one. For example, if you have a `<h2>`, the next heading should be `<h3>`, not `<h4>`.\n   ```html\n   <h1>Main Heading</h1>\n   <h2>Subheading</h2>\n   <h3>Sub-subheading</h3>\n   ```\n\n2. Contrast Issues (ContrastAgent):\n   - Issue: Low contrast ratio of the span element.\n   - Fix: Adjust the color of the text or the background to meet the minimum contrast ratio of 4.5:1.\n   ```css\n   span {\n     color: #767676; /* Adjusted color to increase contrast */\n     background-color: #FFFFFF;\n   }\n   ```\n\n3. ARIA Role Violations (AxeViolationsAgent):\n   - Issue: Inappropriate ARIA role 'combobox'.\n   - Fix: Ensure the ARIA role is appropriate for the element.\n   ```html\n   <div role=\"combobox\"> <!-- Ensure this element is appropriate for the 'combobox' role -->\n     <!-- combobox content -->\n   </div>\n   ```\n\n4. Missing Main Landmark (AxeViolationsAgent):\n   - Issue: Document does not have a main landmark.\n   - Fix: Add a main landmark to the document.\n   ```html\n   <main>\n     <!-- main content -->\n   </main>\n   ```\n\n5. Missing Level-One Heading (AxeViolationsAgent):\n   - Issue: Page does not contain a level-one heading.\n   - Fix: Add a level-one heading to the page.\n   ```html\n   <h1>Page Title</h1>\n   ```\n\n6. Missing Alt Text (ImageCaptioningAgent):\n   - Issue: Several images are missing alt text.\n   - Fix: Add alt text to describe the images.\n   ```html\n   <img src=\"leaf.jpg\" alt=\"a green leaf with a white background\">\n   <svg aria-label=\"a white background with black circles\"> <!-- SVG content --></svg>\n   <svg aria-label=\"google logo\"> <!-- SVG content --></svg>\n   <svg aria-label=\"a black and white photo of a magni\"> <!-- SVG content --></svg>\n   <svg aria-label=\"a microphone icon\"> <!-- SVG content --></svg>\n   <svg aria-label=\"the logo for the new line of products\"> <!-- SVG content --></svg>\n   ```",
+        "content": "\n\n1. Semantic Violations (SemanticAgent):\n   - Issue: Incorrect heading order.\n   - Fix: Ensure heading levels only increase by one. For example, if you have a `<h2>`, the next heading should be `<h3>`, not `<h4>`.\n   ```html\n   <h1>Main Heading</h1>\n   <h2>Subheading</h2>\n   <h3>Sub-subheading</h3>\n   ```\n\n2. Contrast Issues (ContrastAgent):\n   - Issue: Low contrast ratio of the span element.\n   - Fix: Adjust the color of the text or the background to meet the minimum contrast ratio of 4.5:1.\n   ```css\n   span {\n     color: #767676; /* Adjusted color to increase contrast */\n     background-color: #FFFFFF;\n   }\n   ```\n\n3. ARIA Role Violations (AxeViolationsAgent):\n   - Issue: Inappropriate ARIA role 'combobox'.\n   - Fix: Ensure the ARIA role is appropriate for the element.\n   ```html\n   <div role=\"combobox\"> <!-- Ensure this element is appropriate for the 'combobox' role -->\n     <!-- combobox content -->\n   </div>\n   ```\n\n4. Missing Main Landmark (AxeViolationsAgent):\n   - Issue: Document does not have a main landmark.\n   - Fix: Add a main landmark to the document.\n   ```html\n   <main>\n     <!-- main content -->\n   </main>\n   ```\n\n5. Missing Level-One Heading (AxeViolationsAgent):\n   - Issue: Page does not contain a level-one heading.\n   - Fix: Add a level-one heading to the page.\n   ```html\n   <h1>Page Title</h1>\n   ```\n\n6. Missing Alt Text (ImageCaptioningAgent):\n   - Issue: Several images are missing alt text.\n   - Fix: Add alt text to describe the images.\n   ```html\n   <img src=\"leaf.jpg\" alt=\"a green leaf with a white background\">\n   <svg aria-label=\"a white background with black circles\"> <!-- SVG content --></svg>\n   <svg aria-label=\"google logo\"> <!-- SVG content --></svg>\n   <svg aria-label=\"a black and white photo of a magni\"> <!-- SVG content --></svg>\n   <svg aria-label=\"a microphone icon\"> <!-- SVG content --></svg>\n   <svg aria-label=\"the logo for the new line of products\"> <!-- SVG content --></svg>\n   ```",
         "name": "FixingAgent",
         "role": "user"
     }
@@ -111,7 +111,7 @@ SITE_JSON_MAP = {
         "role": "user"
     },
     {
-        "content": "1. **Issue: Incorrect heading order**\n   - Raised by: SemanticAgent\n   - Fix: Ensure that heading levels only increase by one. For example, if you have an `<h2>` element, the next heading should be `<h3>`, not `<h4>`.\n   - Code snippet:\n     ```html\n     <h2>Heading level 2</h2>\n     <h3>Heading level 3</h3>\n     ```\n\n2. **Issue: Low contrast ratio**\n   - Raised by: ContrastAgent\n   - Fix: Increase the contrast ratio to at least 4.5:1 for normal text. This can be done by adjusting the color of the text and/or the background.\n   - Code snippet:\n     ```css\n     a, button, p, .role {\n       color: #000000; /* Adjust color as needed */\n       background-color: #FFFFFF; /* Adjust color as needed */\n     }\n     ```\n\n3. **Issue: Non-unique landmarks**\n   - Raised by: AxeViolationsAgent\n   - Fix: Ensure that each landmark has a unique role or a unique combination of role, label, and title.\n   - Code snippet:\n     ```html\n     <nav aria-label=\"Primary navigation\"></nav>\n     <nav aria-label=\"Secondary navigation\"></nav>\n     ```\n\n4. **Issue: Some content not contained by landmarks**\n   - Raised by: AxeViolationsAgent\n   - Fix: Ensure that all page content is contained within landmark elements.\n   - Code snippet:\n     ```html\n     <main>\n       <!-- All page content goes here -->\n     </main>\n     ```\n\n5. **Issue: Missing alt text for images**\n   - Raised by: ImageCaptioningAgent\n   - Fix: Add meaningful alt text to all images. If an image is decorative and doesn't convey meaningful content, use an empty alt attribute (`alt=\"\"`).\n   - Code snippet:\n     ```html\n     <img src=\"image.jpg\" alt=\"Description of image\">\n     <img src=\"decorative.jpg\" alt=\"\">\n     ```",
+        "content": "\n\n1. **Issue: Incorrect heading order**\n   - Raised by: SemanticAgent\n   - Fix: Ensure that heading levels only increase by one. For example, if you have an `<h2>` element, the next heading should be `<h3>`, not `<h4>`.\n   - Code snippet:\n     ```html\n     <h2>Heading level 2</h2>\n     <h3>Heading level 3</h3>\n     ```\n\n2. **Issue: Low contrast ratio**\n   - Raised by: ContrastAgent\n   - Fix: Increase the contrast ratio to at least 4.5:1 for normal text. This can be done by adjusting the color of the text and/or the background.\n   - Code snippet:\n     ```css\n     a, button, p, .role {\n       color: #000000; /* Adjust color as needed */\n       background-color: #FFFFFF; /* Adjust color as needed */\n     }\n     ```\n\n3. **Issue: Non-unique landmarks**\n   - Raised by: AxeViolationsAgent\n   - Fix: Ensure that each landmark has a unique role or a unique combination of role, label, and title.\n   - Code snippet:\n     ```html\n     <nav aria-label=\"Primary navigation\"></nav>\n     <nav aria-label=\"Secondary navigation\"></nav>\n     ```\n\n4. **Issue: Some content not contained by landmarks**\n   - Raised by: AxeViolationsAgent\n   - Fix: Ensure that all page content is contained within landmark elements.\n   - Code snippet:\n     ```html\n     <main>\n       <!-- All page content goes here -->\n     </main>\n     ```\n\n5. **Issue: Missing alt text for images**\n   - Raised by: ImageCaptioningAgent\n   - Fix: Add meaningful alt text to all images. If an image is decorative and doesn't convey meaningful content, use an empty alt attribute (`alt=\"\"`).\n   - Code snippet:\n     ```html\n     <img src=\"image.jpg\" alt=\"Description of image\">\n     <img src=\"decorative.jpg\" alt=\"\">\n     ```",
         "name": "FixingAgent",
         "role": "user"
     }
@@ -195,7 +195,7 @@ SITE_JSON_MAP = {
         "role": "user"
     },
     {
-        "content": "1. Color Contrast Issues (Raised by ContrastAgent and AxeViolationsAgent):\n\n- For 'a' elements with foreground color RGB(255,255,255) and background color RGB(243,244,244), adjust the color contrast to meet the WCAG recommended minimum of 4.5:1 for normal text.\n\n```css\na {\n    color: #000000; /* or any other color with sufficient contrast */\n    background-color: #F3F4F4; /* or any other color with sufficient contrast */\n}\n```\n\n- For 'span' elements with foreground color RGB(101,111,119) and background color RGB(14,14,14), adjust the color contrast to meet the WCAG recommended minimum of 4.5:1 for normal text.\n\n```css\nspan {\n    color: #FFFFFF; /* or any other color with sufficient contrast */\n    background-color: #0E0E0E; /* or any other color with sufficient contrast */\n}\n```\n\n- For 'label' elements with foreground color RGB(30,30,30) and background color RGB(14,14,14), adjust the color contrast to meet the WCAG recommended minimum of 4.5:1 for normal text.\n\n```css\nlabel {\n    color: #FFFFFF; /* or any other color with sufficient contrast */\n    background-color: #0E0E0E; /* or any other color with sufficient contrast */\n}\n```\n\n2. Image Alt Text Issues (Raised by ImageCaptioningAgent):\n\n- For images with nodeId img-6 and img-7, add descriptive alt text.\n\n```html\n<img id=\"img-6\" src=\"image6.jpg\" alt=\"Descriptive text for image 6\">\n<img id=\"img-7\" src=\"image7.jpg\" alt=\"Descriptive text for image 7\">\n```\n\n- For image with nodeId img-5, adjust the alt text to accurately represent the image content.\n\n```html\n<img id=\"img-5\" src=\"image5.jpg\" alt=\"Accurate description of image 5\">\n```\n\nPlease replace \"Descriptive text for image X\" and \"Accurate description of image X\" with actual descriptions of the images.",
+        "content": "\n\n1. Color Contrast Issues (Raised by ContrastAgent and AxeViolationsAgent):\n\n- For 'a' elements with foreground color RGB(255,255,255) and background color RGB(243,244,244), adjust the color contrast to meet the WCAG recommended minimum of 4.5:1 for normal text.\n\n```css\na {\n    color: #000000; /* or any other color with sufficient contrast */\n    background-color: #F3F4F4; /* or any other color with sufficient contrast */\n}\n```\n\n- For 'span' elements with foreground color RGB(101,111,119) and background color RGB(14,14,14), adjust the color contrast to meet the WCAG recommended minimum of 4.5:1 for normal text.\n\n```css\nspan {\n    color: #FFFFFF; /* or any other color with sufficient contrast */\n    background-color: #0E0E0E; /* or any other color with sufficient contrast */\n}\n```\n\n- For 'label' elements with foreground color RGB(30,30,30) and background color RGB(14,14,14), adjust the color contrast to meet the WCAG recommended minimum of 4.5:1 for normal text.\n\n```css\nlabel {\n    color: #FFFFFF; /* or any other color with sufficient contrast */\n    background-color: #0E0E0E; /* or any other color with sufficient contrast */\n}\n```\n\n2. Image Alt Text Issues (Raised by ImageCaptioningAgent):\n\n- For images with nodeId img-6 and img-7, add descriptive alt text.\n\n```html\n<img id=\"img-6\" src=\"image6.jpg\" alt=\"Descriptive text for image 6\">\n<img id=\"img-7\" src=\"image7.jpg\" alt=\"Descriptive text for image 7\">\n```\n\n- For image with nodeId img-5, adjust the alt text to accurately represent the image content.\n\n```html\n<img id=\"img-5\" src=\"image5.jpg\" alt=\"Accurate description of image 5\">\n```\n\nPlease replace \"Descriptive text for image X\" and \"Accurate description of image X\" with actual descriptions of the images.",
         "name": "FixingAgent",
         "role": "user"
     }
@@ -237,7 +237,7 @@ SITE_JSON_MAP = {
         "role": "user"
     },
     {
-        "content": "1. Issue: Low contrast ratio\n   Agent: ContrastAgent, VisuallyImpairedAgent, MotorImpairedAgent, ColorBlindAgent\n   Fix: Increase the contrast ratio for the text to at least 4.5:1. This can be done by adjusting the color of the text or the background. Here's an example of how to adjust the color in CSS:\n\n   ```css\n   a {\n     color: #000000; /* Adjust to a darker color */\n     background-color: #FFFFFF; /* Adjust to a lighter color */\n   }\n\n   p {\n     color: #000000; /* Adjust to a darker color */\n     background-color: #FFFFFF; /* Adjust to a lighter color */\n   }\n\n   .role {\n     color: #000000; /* Adjust to a darker color */\n     background-color: #FFFFFF; /* Adjust to a lighter color */\n   }\n   ```\n\n2. Issue: Inappropriate use of ARIA roles\n   Agent: AxeViolationsAgent, VisuallyImpairedAgent, MotorImpairedAgent\n   Fix: Use appropriate ARIA roles for each element. If an element is not a button, do not assign it a 'button' role. Here's an example of how to adjust the role in HTML:\n\n   ```html\n   <div role=\"navigation\">...</div> <!-- Use appropriate role -->\n   ```\n\n3. Issue: Inaccurate image alt text\n   Agent: ImageCaptioningAgent, VisuallyImpairedAgent, MotorImpairedAgent\n   Fix: Ensure that the alt text accurately describes the content of the image. Here's an example of how to adjust the alt text in HTML:\n\n   ```html\n   <img src=\"ietf-logo.jpg\" alt=\"IETF logo\"> <!-- Use accurate alt text -->\n   <img src=\"ietf-123-madrid.jpg\" alt=\"IETF 123 Madrid\"> <!-- Use accurate alt text -->\n   <img src=\"montreal-skyline.jpg\" alt=\"Montreal skyline\"> <!-- Use accurate alt text -->\n   ```",
+        "content": "\n\n1. Issue: Low contrast ratio\n   Agent: ContrastAgent, VisuallyImpairedAgent, MotorImpairedAgent, ColorBlindAgent\n   Fix: Increase the contrast ratio for the text to at least 4.5:1. This can be done by adjusting the color of the text or the background. Here's an example of how to adjust the color in CSS:\n\n   ```css\n   a {\n     color: #000000; /* Adjust to a darker color */\n     background-color: #FFFFFF; /* Adjust to a lighter color */\n   }\n\n   p {\n     color: #000000; /* Adjust to a darker color */\n     background-color: #FFFFFF; /* Adjust to a lighter color */\n   }\n\n   .role {\n     color: #000000; /* Adjust to a darker color */\n     background-color: #FFFFFF; /* Adjust to a lighter color */\n   }\n   ```\n\n2. Issue: Inappropriate use of ARIA roles\n   Agent: AxeViolationsAgent, VisuallyImpairedAgent, MotorImpairedAgent\n   Fix: Use appropriate ARIA roles for each element. If an element is not a button, do not assign it a 'button' role. Here's an example of how to adjust the role in HTML:\n\n   ```html\n   <div role=\"navigation\">...</div> <!-- Use appropriate role -->\n   ```\n\n3. Issue: Inaccurate image alt text\n   Agent: ImageCaptioningAgent, VisuallyImpairedAgent, MotorImpairedAgent\n   Fix: Ensure that the alt text accurately describes the content of the image. Here's an example of how to adjust the alt text in HTML:\n\n   ```html\n   <img src=\"ietf-logo.jpg\" alt=\"IETF logo\"> <!-- Use accurate alt text -->\n   <img src=\"ietf-123-madrid.jpg\" alt=\"IETF 123 Madrid\"> <!-- Use accurate alt text -->\n   <img src=\"montreal-skyline.jpg\" alt=\"Montreal skyline\"> <!-- Use accurate alt text -->\n   ```",
         "name": "FixingAgent",
         "role": "user"
     }
@@ -321,7 +321,7 @@ SITE_JSON_MAP = {
         "role": "user"
     },
     {
-        "content": "1. Contrast Issues (Raised by ContrastAgent and AxeViolationsAgent)\n   - Button Element: The button element has a foreground color of RGB(40,40,41) and background color of RGB(46,105,255) resulting in a contrast ratio of 3.21. This is below the WCAG recommended minimum of 4.5:1 for normal text. To fix this, adjust the color values to meet the minimum contrast ratio.\n     ```css\n     .button {\n       background-color: #2C69FF; /* Adjust to meet 4.5:1 contrast ratio */\n       color: #282829; /* Adjust to meet 4.5:1 contrast ratio */\n     }\n     ```\n   - Other Elements: There are elements with insufficient color contrast of 3 (foreground color: #939598, background color: #ffffff). Adjust the color values to meet the minimum contrast ratio.\n     ```css\n     .element {\n       background-color: #ffffff; /* Adjust to meet 4.5:1 contrast ratio */\n       color: #939598; /* Adjust to meet 4.5:1 contrast ratio */\n     }\n     ```\n\n2. Link Styling (Raised by AxeViolationsAgent)\n   - The link has insufficient color contrast of 2.14:1 with the surrounding text (link text: #195faa, surrounding text: #939598). The link also lacks styling to distinguish it from the surrounding text. To fix this, adjust the color values and add styling such as underline.\n     ```css\n     a {\n       color: #195faa; /* Adjust to meet 3:1 contrast ratio */\n       text-decoration: underline;\n     }\n     ```\n\n3. Landmark Issues (Raised by AxeViolationsAgent)\n   - Some page content is not contained by landmarks. To fix this, ensure all content is contained within appropriate landmark elements (e.g., `<main>`, `<header>`, `<footer>`, `<nav>`, `<aside>`, `<section>`, `<article>`).\n\n4. Tabindex Issues (Raised by AxeViolationsAgent)\n   - Elements have a tabindex greater than 0. To fix this, ensure all interactive elements have a tabindex of 0 or -1.\n     ```html\n     <button tabindex=\"0\">Button</button>\n     ```\n\n5. Image Alt Text (Raised by ImageCaptioningAgent)\n   - Several SVG elements are missing alt text. To fix this, add appropriate alt text to each image.\n     ```html\n     <img src=\"logo.svg\" alt=\"The logo for the company\">\n     <img src=\"google-logo.svg\" alt=\"Google logo\">\n     <img src=\"facebook-logo.svg\" alt=\"Facebook logo\">\n     <img src=\"background.svg\" alt=\"White background\">\n     <img src=\"woman.svg\" alt=\"A woman in a white dress and a black hat\">\n     ```",
+        "content": "\n\n1. Contrast Issues (Raised by ContrastAgent and AxeViolationsAgent)\n   - Button Element: The button element has a foreground color of RGB(40,40,41) and background color of RGB(46,105,255) resulting in a contrast ratio of 3.21. This is below the WCAG recommended minimum of 4.5:1 for normal text. To fix this, adjust the color values to meet the minimum contrast ratio.\n     ```css\n     .button {\n       background-color: #2C69FF; /* Adjust to meet 4.5:1 contrast ratio */\n       color: #282829; /* Adjust to meet 4.5:1 contrast ratio */\n     }\n     ```\n   - Other Elements: There are elements with insufficient color contrast of 3 (foreground color: #939598, background color: #ffffff). Adjust the color values to meet the minimum contrast ratio.\n     ```css\n     .element {\n       background-color: #ffffff; /* Adjust to meet 4.5:1 contrast ratio */\n       color: #939598; /* Adjust to meet 4.5:1 contrast ratio */\n     }\n     ```\n\n2. Link Styling (Raised by AxeViolationsAgent)\n   - The link has insufficient color contrast of 2.14:1 with the surrounding text (link text: #195faa, surrounding text: #939598). The link also lacks styling to distinguish it from the surrounding text. To fix this, adjust the color values and add styling such as underline.\n     ```css\n     a {\n       color: #195faa; /* Adjust to meet 3:1 contrast ratio */\n       text-decoration: underline;\n     }\n     ```\n\n3. Landmark Issues (Raised by AxeViolationsAgent)\n   - Some page content is not contained by landmarks. To fix this, ensure all content is contained within appropriate landmark elements (e.g., `<main>`, `<header>`, `<footer>`, `<nav>`, `<aside>`, `<section>`, `<article>`).\n\n4. Tabindex Issues (Raised by AxeViolationsAgent)\n   - Elements have a tabindex greater than 0. To fix this, ensure all interactive elements have a tabindex of 0 or -1.\n     ```html\n     <button tabindex=\"0\">Button</button>\n     ```\n\n5. Image Alt Text (Raised by ImageCaptioningAgent)\n   - Several SVG elements are missing alt text. To fix this, add appropriate alt text to each image.\n     ```html\n     <img src=\"logo.svg\" alt=\"The logo for the company\">\n     <img src=\"google-logo.svg\" alt=\"Google logo\">\n     <img src=\"facebook-logo.svg\" alt=\"Facebook logo\">\n     <img src=\"background.svg\" alt=\"White background\">\n     <img src=\"woman.svg\" alt=\"A woman in a white dress and a black hat\">\n     ```",
         "name": "FixingAgent",
         "role": "user"
     }
@@ -447,7 +447,7 @@ SITE_JSON_MAP = {
         "role": "user"
     },
     {
-        "content": "1. Contrast Issues (Raised by ContrastAgent)\n   - Issue: The li, p, and a elements have a contrast ratio of 1.00, which is below the WCAG recommended minimum of 4.5:1 for normal text.\n   - Fix: Adjust the color of the text or the background to increase the contrast ratio. Here's an example of how to do this in CSS:\n\n```css\nli, p, a {\n    color: #000000; /* or any other color with sufficient contrast */\n    background-color: #FFFFFF; /* or any other color with sufficient contrast */\n}\n```\n\n2. ARIA Role Violations (Raised by AxeViolationsAgent)\n   - Issue: Some elements have an inappropriate ARIA role attribute.\n   - Fix: Ensure that the role attribute has an appropriate value for the element. Here's an example of how to do this in HTML:\n\n```html\n<div role=\"appropriateRole\"> <!-- replace \"appropriateRole\" with the correct role -->\n    <!-- element content -->\n</div>\n```\n\n3. Missing Alt Text (Raised by ImageCaptioningAgent)\n   - Issue: Multiple images are missing alt text.\n   - Fix: Add alt text to each image that accurately describes the image content. Here's an example of how to do this in HTML:\n\n```html\n<img src=\"image.jpg\" alt=\"accurate description of image\"> <!-- replace \"image.jpg\" with the image source and \"accurate description of image\" with the correct description -->\n```\n\n4. Inaccurate Alt Text (Raised by ImageCaptioningAgent)\n   - Issue: The alt text for some images does not accurately represent the image content.\n   - Fix: Update the alt text to accurately describe the image content. Here's an example of how to do this in HTML:\n\n```html\n<img src=\"image.jpg\" alt=\"accurate description of image\"> <!-- replace \"image.jpg\" with the image source and \"accurate description of image\" with the correct description -->\n```",
+        "content": "\n\n1. Contrast Issues (Raised by ContrastAgent)\n   - Issue: The li, p, and a elements have a contrast ratio of 1.00, which is below the WCAG recommended minimum of 4.5:1 for normal text.\n   - Fix: Adjust the color of the text or the background to increase the contrast ratio. Here's an example of how to do this in CSS:\n\n```css\nli, p, a {\n    color: #000000; /* or any other color with sufficient contrast */\n    background-color: #FFFFFF; /* or any other color with sufficient contrast */\n}\n```\n\n2. ARIA Role Violations (Raised by AxeViolationsAgent)\n   - Issue: Some elements have an inappropriate ARIA role attribute.\n   - Fix: Ensure that the role attribute has an appropriate value for the element. Here's an example of how to do this in HTML:\n\n```html\n<div role=\"appropriateRole\"> <!-- replace \"appropriateRole\" with the correct role -->\n    <!-- element content -->\n</div>\n```\n\n3. Missing Alt Text (Raised by ImageCaptioningAgent)\n   - Issue: Multiple images are missing alt text.\n   - Fix: Add alt text to each image that accurately describes the image content. Here's an example of how to do this in HTML:\n\n```html\n<img src=\"image.jpg\" alt=\"accurate description of image\"> <!-- replace \"image.jpg\" with the image source and \"accurate description of image\" with the correct description -->\n```\n\n4. Inaccurate Alt Text (Raised by ImageCaptioningAgent)\n   - Issue: The alt text for some images does not accurately represent the image content.\n   - Fix: Update the alt text to accurately describe the image content. Here's an example of how to do this in HTML:\n\n```html\n<img src=\"image.jpg\" alt=\"accurate description of image\"> <!-- replace \"image.jpg\" with the image source and \"accurate description of image\" with the correct description -->\n```",
         "name": "FixingAgent",
         "role": "user"
     }
@@ -489,7 +489,7 @@ SITE_JSON_MAP = {
         "role": "user"
     },
     {
-        "content": "1. Missing alt text for image (nodeId img-0)\n   - Raised by: ImageCaptioningAgent, VisuallyImpairedAgent, MotorImpairedAgent, ColorBlindAgent\n   - Fix: Add an alt attribute to the image tag with the generated caption as its value. This will provide a description of the image for screen-reader users and improve keyboard navigation.\n\nHTML snippet:\n```html\n<img id=\"img-0\" src=\"image-source.jpg\" alt=\"a white puzzle ball with letters on it\">\n```\nThis fix ensures that the image is accessible to all users, including those who rely on screen readers or keyboard navigation.",
+        "content": "\n\n1. Missing alt text for image (nodeId img-0)\n   - Raised by: ImageCaptioningAgent, VisuallyImpairedAgent, MotorImpairedAgent, ColorBlindAgent\n   - Fix: Add an alt attribute to the image tag with the generated caption as its value. This will provide a description of the image for screen-reader users and improve keyboard navigation.\n\nHTML snippet:\n```html\n<img id=\"img-0\" src=\"image-source.jpg\" alt=\"a white puzzle ball with letters on it\">\n```\nThis fix ensures that the image is accessible to all users, including those who rely on screen readers or keyboard navigation.",
         "name": "FixingAgent",
         "role": "user"
     }
@@ -572,6 +572,8 @@ with tab1:
 
 with tab2:
     st.header(f"📊 Feedback Stats for {selected_site}")
+
+    # 1) Load feedback
     fb = (
         supabase.table("feedback")
         .select("site_name,fix_index,action")
@@ -580,28 +582,59 @@ with tab2:
         .data
     )
     df = pd.DataFrame(fb)
-    if df.empty:
+
+    # 2) If there’s no data or the column’s missing, just show the info and skip the rest
+    if df.empty or "fix_index" not in df.columns:
         st.info("No feedback yet – vote in the Review tab.")
     else:
-        summary = (
-            df.groupby(["site_name","fix_index"])
-            .action.value_counts()
-            .unstack(fill_value=0)
-            .reset_index()
-            .rename(columns={"up":"Upvotes","down":"Downvotes"})
+        # 3) Build mapping from fix_index → Fix title
+        import re
+        fix_item = next(
+            item for item in SITE_JSON_MAP[selected_site]
+            if item["name"] == "FixingAgent"
         )
-        summary["total"] = summary["Upvotes"] + summary["Downvotes"]
-        st.subheader("Per-Suggestion Summary")
-        st.dataframe(summary[["site_name","fix_index","Upvotes","Downvotes"]])
+        chunks = re.split(r"\n\n(?=\d+\.)", fix_item["content"])
+        suggestions = chunks[1:] if len(chunks) > 1 else []
+        # Extract the first line of each suggestion as the title
+        titles = []
+        for s in suggestions:
+            m = re.match(r"\d+\.\s*(.+)", s)
+            titles.append(m.group(1).split("\n",1)[0].strip() if m else s.strip())
+        title_map = {i+1: t for i, t in enumerate(titles)}
 
+        # 4) Aggregate up/down votes by fix_index
+        summary = (
+            df.groupby("fix_index")
+              .action.value_counts()
+              .unstack(fill_value=0)
+              .rename(columns={"up": "Upvotes", "down": "Downvotes"})
+              .reset_index()
+        )
+        for col in ("Upvotes", "Downvotes"):
+            if col not in summary:
+                summary[col] = 0
+
+        # 5) Swap fix_index for the human-readable “Fix” column
+        summary["Fix"] = summary["fix_index"].map(title_map)
+        summary["Total"] = summary["Upvotes"] + summary["Downvotes"]
+
+        # 6) Display the per-suggestion table
+        st.subheader("Per-Suggestion Summary")
+        st.dataframe(
+            summary[["Fix", "Upvotes", "Downvotes"]],
+            use_container_width=True
+        )
+
+        # 7) Overall metrics
         total = len(df)
-        ups = df["action"].value_counts().get("up",0)
-        downs = df["action"].value_counts().get("down",0)
-        agreement = ups/total if total else 0
+        ups = df["action"].value_counts().get("up", 0)
+        downs = df["action"].value_counts().get("down", 0)
+        agreement = ups / total if total else 0
 
         st.subheader("Overall Metrics")
-        c1,c2,c3,c4 = st.columns(4)
+        c1, c2, c3, c4 = st.columns(4)
         c1.metric("Total Votes", total)
         c2.metric("👍 Upvotes", ups)
         c3.metric("👎 Downvotes", downs)
         c4.metric("Agreement", f"{agreement:.0%}")
+
